@@ -1,0 +1,237 @@
+@charset "utf-8";
+:root {
+    --main-bg-color: rgb(43, 181, 216);
+    --main-shadow-color: rgb(31, 121, 146);
+    --sub-bg-color: rgb(147, 213, 229);
+    --sub2-bg-color: #F2E0D7;
+    --accent-bg-color: rgb(240, 132, 179);
+    --main-color: whitesmoke;
+}
+
+/**
+ *  アプリケーション共通部 
+ */
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: white;
+    background-size: cover;
+    font-size: 1.4rem;
+    font-family: 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    border: none;
+}
+
+button:focus {
+    outline: 0;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:active {
+    transform: translate3d(0, 0.15rem, 0);
+}
+
+header {
+    background-color: var(--main-bg-color);
+    color: var(--main-color);
+    border-radius: 0 0 0.3rem 0.3rem;
+    padding: 2rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    display: inline-block;
+}
+
+header .home {
+    background-color: var(--main-bg-color);
+    color: var(--main-color);
+    border: none;
+    margin-right: 0;
+    font-size: 1.8rem;
+    vertical-align: bottom;
+    float: right;
+}
+
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/**
+ *  アプリケーション固有部 
+ */
+
+.main-container {
+    margin: 1.4rem;
+}
+
+.food-block {
+    margin-bottom: 1.4rem;
+}
+
+.food-block .food-title {
+    padding: 1rem;
+    font-size: 2rem;
+    border-left: solid 0.8rem var(--main-bg-color);
+    border-bottom: solid 0.3rem var(--main-bg-color);
+}
+
+.food-block .food-items {
+    font-size: 1.6rem;
+}
+
+.food-block .food-item {
+    border-bottom: dashed 0.12rem var(--main-bg-color);
+    padding: 1rem;
+}
+
+.food-block .flag {
+    display: inline-block;
+    text-decoration: none;
+    background: var(--sub-bg-color);
+    color: var(--main-color);
+    font-weight: bold;
+    border-radius: 0.4rem;
+    text-align: center;
+    overflow: hidden;
+    padding: 0.8rem;
+    vertical-align: 15%;
+    margin-right: 0.6rem;
+}
+
+.food-block .discription {
+    float: right;
+    padding-top: 0.8rem;
+}
+
+.food-block .point {
+    font-size: 1rem;
+}
+
+.food-block .locale {
+    font-size: 1.4rem;
+}
+
+footer {
+    padding: 2rem;
+    position: fixed;
+    bottom: 4rem;
+    width: 100%;
+}
+
+footer .flag {
+    /* background-color: rgb(195, 196, 197); */
+    background-color: var(--sub-bg-color);
+    color: var(--main-color);
+    /* background-color: var(--main-bg-color);
+    color: var(--main-color); */
+    width: 7.6rem;
+    height: 7rem;
+    
+    border-radius: 0.5rem;
+}
+
+/** 
+ * modalウィンドウ
+ */
+ .modal-area {
+    /* display: none; */
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-bg {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30, 30, 30, 0.5);
+}
+
+.modal-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    max-width: 50rem;
+    padding: 0;
+    background-color: #fff;
+}
+
+.modal-headder {
+    color: var(--main-color);
+    background-color: var(--main-bg-color);
+    height: 3rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.modal-title {
+    height: 100%;
+    padding-left: 1rem;
+    width: 80%;
+    font-size: 1.8rem;
+    text-align: left;
+    float: left;
+    line-height: 3rem;
+}
+
+.modal-close {
+    color: var(--main-color);
+    background-color: transparent;
+    /* displayはアプリ処理でblockに指定 */
+    /* display: none;  */
+    display: block;
+    height: 100%;
+    font-size: 3rem;
+    line-height: 3rem;
+    width: 10%;
+    padding: 0;
+    float: right;
+    cursor: pointer;
+}
+
+
+.food-detail {
+    margin-bottom: 4rem;
+}
+
+.food-detail-img {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.food-detail-img img {
+    width: 100%;
+}
+
+.near-food-container {
+    padding: 1.4rem;
+}
