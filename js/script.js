@@ -6,33 +6,39 @@ let vm = new Vue({
                 foodTitle: '肉',
                 foodItems: [
                     {
+                        flag: false,
+                        visible: true,
                         food: '牛タン',
                         locale: '宮城'
                     },
                     {
+                        flag: false,
+                        visible: true,
                         food: 'ジンギスカン',
                         locale: '北海道'
                     },
                     {
+                        flag: false,
+                        visible: true,
                         food: '松坂牛',
                         locale: '三重'
                     }
                 ]
             },
             {
-                foodTitle: '肉',
+                foodTitle: '海鮮',
                 foodItems: [
                     {
-                        food: '牛タン',
-                        locale: '宮城'
+                        flag: false,
+                        visible: true,
+                        food: 'ノドグロ',
+                        locale: '石川'
                     },
                     {
-                        food: 'ジンギスカン',
-                        locale: '北海道'
-                    },
-                    {
-                        food: '松坂牛',
-                        locale: '三重'
+                        flag: false,
+                        visible: true,
+                        food: '松葉ガニ',
+                        locale: '鳥取'
                     }
                 ]
             }
@@ -51,6 +57,36 @@ let vm = new Vue({
         showDetail: function(blockIndex, itemIndex){
             this.foodDetail.visible = true;
             this.foodDetail.title = this.foodBlocks[blockIndex].foodItems[itemIndex].food
+        },
+        changeFlag: function (blockIndex, itemIndex) {
+            this.foodBlocks[blockIndex].foodItems[itemIndex].flag = //
+                this.foodBlocks[blockIndex].foodItems[itemIndex].flag ? false : true;
+        },
+        refineFood: function(){
+            for(block of this.foodBlocks) {
+                for(item of block.foodItems) {
+                    if(!item.flag) {
+                        item.visible = false;
+                    }
+                }
+            }
+        },
+        clearRefineFood: function() {
+            for(block of this.foodBlocks) {
+                for(item of block.foodItems) {
+                    if(!item.flag) {
+                        item.visible = true;
+                    }
+                }
+            }
+        },
+        clearSelected: function() {
+            for(block of this.foodBlocks) {
+                for(item of block.foodItems) {
+                        item.visible = true;
+                        item.flag = false;                    
+                }
+            }
         }
     }
 });

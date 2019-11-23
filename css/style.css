@@ -123,6 +123,10 @@ header .home {
     margin-right: 0.6rem;
 }
 
+.food-block .selected {
+    color: rgb(252, 245, 28);
+}
+
 .food-block .discription {
     float: right;
     padding-top: 0.8rem;
@@ -144,14 +148,20 @@ footer {
 }
 
 footer .flag {
-    /* background-color: rgb(195, 196, 197); */
     background-color: var(--sub-bg-color);
-    color: var(--main-color);
-    /* background-color: var(--main-bg-color);
-    color: var(--main-color); */
+    color: rgb(252, 245, 28);
+    font-size: 1rem;
     width: 7.6rem;
     height: 7rem;
-    
+    border-radius: 0.5rem;
+}
+
+footer .clear-flag {
+    background-color: var(--sub-bg-color);
+    color: var(--main-color);
+    font-size: 1rem;
+    width: 7.6rem;
+    height: 7rem;
     border-radius: 0.5rem;
 }
 
@@ -235,3 +245,4 @@ footer .flag {
 .near-food-container {
     padding: 1.4rem;
 }
+
