@@ -1,8 +1,8 @@
 @charset "utf-8";
 :root {
-    --main-bg-color: rgb(43, 181, 216);
-    --main-shadow-color: rgb(31, 121, 146);
-    --sub-bg-color: rgb(147, 213, 229);
+    --main-bg-color: rgb(78, 18, 24);
+    --main-shadow-color: rgb(24, 4, 20);
+    --sub-bg-color: rgb(121, 26, 51);
     --sub2-bg-color: #F2E0D7;
     --accent-bg-color: rgb(240, 132, 179);
     --main-color: whitesmoke;
@@ -140,11 +140,16 @@ header .home {
     font-size: 1.4rem;
 }
 
+
+/*
+ * フッタ
+ */
 footer {
-    padding: 2rem;
+    padding: 1rem;
     position: fixed;
-    bottom: 4rem;
+    bottom: 0;
     width: 100%;
+    background-color: var(--main-color);
 }
 
 footer .flag {
@@ -163,6 +168,19 @@ footer .clear-flag {
     width: 7.6rem;
     height: 7rem;
     border-radius: 0.5rem;
+}
+
+footer .random-box{
+    background-color: var(--sub-bg-color);
+    color: var(--main-color);
+    font-size: 1rem;
+    width: 7.6rem;
+    height: 7rem;
+    border-radius: 0.5rem;
+}
+
+.footer-height {
+    height: 10rem;
 }
 
 /** 
@@ -189,7 +207,7 @@ footer .clear-flag {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 70%;
+    width: 80%;
     max-width: 50rem;
     padding: 0;
     background-color: #fff;
@@ -246,3 +264,136 @@ footer .clear-flag {
     padding: 1.4rem;
 }
 
+/* 
+ * 検索ボックス
+ */
+.search-checkbox-container {
+    border: solid 0.2rem var(--main-bg-color);
+    border-radius: 0.5rem;
+    /* padding: 0 1rem 1rem 1rem; */
+    width: 98%;
+    margin-bottom: 2rem;
+}
+
+.search-checkbox-container .title {
+    padding: 0.8rem 1rem 0.8rem 0.4rem;
+    font-size: 1.2rem;
+    background-color: var(--sub-bg-color);
+    color: var(--main-color);
+    cursor: pointer;
+}
+
+.search-checkbox-container .title::after{
+    border: solid transparent;
+    content: "";
+    border-top-color: var(--main-color);
+    border-width: 0.7rem;
+    float: right;
+    transition: all 0.2s ease-in;
+}
+
+.search-checkbox-container .title.opened::after{
+      transform:rotateX(180deg);
+      margin-top: -6px;
+}
+
+.search-checkbox-container .content {
+    overflow: hidden;
+    transition: all 0.4s ease-in;
+}
+
+.search-accordion-enter-active{
+    animation-duration: 0.6s;
+    animation-fill-mode: both;
+    animation-name: search-accordion-open;
+}
+.search-accordion-leave-active{
+    animation-duration: 0.6s;
+    animation-fill-mode: both;
+    animation-name: search-accordion-close;
+}
+  
+@keyframes search-accordion-open {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes search-accordion-close {
+    0% {
+        height: 400px;
+    }
+
+    100% {
+        height: 0;
+    }
+}
+
+.search-checkbox-container .parents {
+    width: 30%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.search-checkbox-container .parent {
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.search-checkbox-container .childs {
+    margin-left: 1.6rem;
+}
+
+.search-checkbox-container .search-checkbox-button {
+    color: var(--main-color);
+    background-color: var(--sub-bg-color);
+    padding: 0.6rem;
+    float: right;
+    margin: 2rem 0.4rem 1rem 0;
+    border-radius: 0.6rem;
+}
+
+/* 
+ * ランダム選択結果
+ */
+ .random-choise-result {
+     padding: 1rem;
+ }
+
+ .random-choise-result .food-item {
+    border-bottom: dashed 0.12rem var(--main-bg-color);
+    padding: 1rem;
+}
+
+ .random-choise-result .flag {
+    display: inline-block;
+    text-decoration: none;
+    background: var(--sub-bg-color);
+    color: var(--main-color);
+    font-weight: bold;
+    border-radius: 0.4rem;
+    text-align: center;
+    overflow: hidden;
+    padding: 0.8rem;
+    vertical-align: 15%;
+    margin-right: 0.6rem;
+}
+
+.random-choise-result .selected {
+    color: rgb(252, 245, 28);
+}
+
+.random-choise-result .discription {
+    float: right;
+    padding-top: 0.8rem;
+}
+
+.random-choise-result .point {
+    font-size: 1rem;
+}
+
+.random-choise-result .locale {
+    font-size: 1.4rem;
+}

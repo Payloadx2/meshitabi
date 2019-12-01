@@ -1,27 +1,121 @@
 let vm = new Vue({
     el: '#main-container',
     data: {
+        searchByLocale:{
+            visible: true,
+            regionCheckBoxes:[
+                {
+                    id: 'pc01',
+                    name: '東北',
+                    checked: 'checked',
+                    prefCheckBoxes:[
+                        {
+                            id: 'cc01',
+                            name: '青森',
+                            checked: 'checked'
+                        },
+                        {
+                            id: 'cc02',
+                            name: '岩手',
+                            checked: 'checked'
+                        },
+                        {
+                            id: 'cc03',
+                            name: '宮城',
+                            checked: 'checked'
+                        },
+                        {
+                            id: 'cc04',
+                            name: '秋田',
+                            checked: 'checked'
+                        },
+                        {
+                            id: 'cc05',
+                            name: '福島',
+                            checked: 'checked'
+                        }
+                    ]
+                },
+                {
+                    id: 'pc02',
+                    name: '北海道',
+                    checked: 'checked',
+                    prefCheckBoxes:[
+                        {
+                            id: 'cc06',
+                            name: '北海道',
+                            checked: 'checked'
+                        }
+                    ]
+                },
+                {
+                    id: 'pc03',
+                    name: '近畿',
+                    checked: 'checked',
+                    prefCheckBoxes:[
+                        {
+                            id: 'cc07',
+                            name: '三重',
+                            checked: 'checked'
+                        }
+                    ]
+                },
+                {
+                    id: 'pc04',
+                    name: '中国',
+                    checked: 'checked',
+                    prefCheckBoxes:[
+                        {
+                            id: 'cc08',
+                            name: '鳥取',
+                            checked: 'checked'
+                        }
+                    ]
+                },
+                {
+                    id: 'pc05',
+                    name: '中部',
+                    checked: 'checked',
+                    prefCheckBoxes:[
+                        {
+                            id: 'cc09',
+                            name: '石川',
+                            checked: 'checked'
+                        }
+                    ]
+                }
+            ]
+        },
         foodBlocks: [
             {
                 foodTitle: '肉',
                 foodItems: [
                     {
                         flag: false,
+                        flagVisible: true,
+                        localeVisible: true,
                         visible: true,
                         food: '牛タン',
-                        locale: '宮城'
+                        region: '東北',
+                        pref: '宮城'
                     },
                     {
                         flag: false,
+                        flagVisible: true,
+                        localeVisible: true,
                         visible: true,
                         food: 'ジンギスカン',
-                        locale: '北海道'
+                        region: '北海道',
+                        pref: '北海道'
                     },
                     {
                         flag: false,
+                        flagVisible: true,
+                        localeVisible: true,
                         visible: true,
                         food: '松坂牛',
-                        locale: '三重'
+                        region: '近畿',
+                        pref: '三重'
                     }
                 ]
             },
@@ -30,15 +124,21 @@ let vm = new Vue({
                 foodItems: [
                     {
                         flag: false,
+                        flagVisible: true,
+                        localeVisible: true,
                         visible: true,
                         food: 'ノドグロ',
-                        locale: '石川'
+                        region: '中部',
+                        pref: '石川'
                     },
                     {
                         flag: false,
+                        flagVisible: true,
+                        localeVisible: true,
                         visible: true,
                         food: '松葉ガニ',
-                        locale: '鳥取'
+                        region: '中国',
+                        pref: '鳥取'
                     }
                 ]
             }
@@ -48,6 +148,11 @@ let vm = new Vue({
             title: '牛タン',
             img: './img/gyutan.JPG',
             nearFoodDiscription: '仙台牛、松島牡蠣丼、フカヒレ、気仙沼ホルモン、石巻焼きそば'
+        },
+        randomChoiseResult: {
+            visible: false,
+            title: '結果',
+            foodItems: []
         }
     },
     methods: {
@@ -56,37 +161,136 @@ let vm = new Vue({
         },
         showDetail: function(blockIndex, itemIndex){
             this.foodDetail.visible = true;
-            this.foodDetail.title = this.foodBlocks[blockIndex].foodItems[itemIndex].food
+            this.foodDetail.title = this.foodBlocks[blockIndex].foodItems[itemIndex].food;
         },
         changeFlag: function (blockIndex, itemIndex) {
             this.foodBlocks[blockIndex].foodItems[itemIndex].flag = //
                 this.foodBlocks[blockIndex].foodItems[itemIndex].flag ? false : true;
         },
-        refineFood: function(){
+        refineFoodByFlag: function(){
             for(block of this.foodBlocks) {
                 for(item of block.foodItems) {
                     if(!item.flag) {
+                        item.flagVisible = false;
                         item.visible = false;
                     }
                 }
             }
         },
-        clearRefineFood: function() {
+        clearRefineFoodByFlag: function() {
             for(block of this.foodBlocks) {
                 for(item of block.foodItems) {
                     if(!item.flag) {
+                        item.flagVisible = true;
+                        if(item.localeVisible) {
+                            item.visible = true;
+                        }
+                    }
+                }
+            }
+        },
+        clearAllFlag: function() {
+            for(block of this.foodBlocks) {
+                for(item of block.foodItems) {
+                    item.flag = false;
+                    item.flagVisible = true;
+                    if(item.localeVisible) {
                         item.visible = true;
                     }
                 }
             }
         },
-        clearSelected: function() {
+        toggleLocaleSearchBox: function(){
+            this.searchByLocale.visible = !this.searchByLocale.visible;
+        },
+        toggleCheckAllPrefInReg: function(regionCheckBoxIndex) {
+            parentChecked = this.searchByLocale.regionCheckBoxes[regionCheckBoxIndex].checked;
+            for(prefCheckBox of this.searchByLocale.regionCheckBoxes[regionCheckBoxIndex].prefCheckBoxes) {
+                prefCheckBox.checked = parentChecked;
+            } 
+        },
+        showRandomChoise: function(count) {
+            let targetFoods = [];
+
+            // 表示されている名物にターゲットを絞り込む
+            this.foodBlocks.forEach(function(block, blockIndex) {
+                block.foodItems.forEach(function(item, itemIndex) {
+                    if(item.visible){
+                        targetFoods.push(
+                            {
+                                blockIndex: blockIndex,
+                                itemIndex: itemIndex,
+                                foodItem: item
+                            }
+                        )
+                    }
+                })
+            });
+
+            // 指定個数ランダムに選択して結果に追加
+            this.randomChoiseResult.foodItems = random(targetFoods, count);
+
+            // 結果表示
+            this.randomChoiseResult.visible = true;
+        },
+        hideRandomChoise: function() {
+            this.randomChoiseResult.visible = false;
+            this.randomChoiseResult.foodItems.splice(0);
+        },
+        refineFoodByLocale: function() {
             for(block of this.foodBlocks) {
                 for(item of block.foodItems) {
-                        item.visible = true;
-                        item.flag = false;                    
+                    item.localeVisible = this.isLocaleChecked(item.region, item.pref);
+                    if(item.visible != (item.flagVisible && item.localeVisible)) {
+                        // 現在の表示状態と、localeVisible更新後の表示状態が異なる場合のみ表示状態更新
+                        item.visible = item.flagVisible && item.localeVisible;
+                    }
                 }
             }
+        },
+        isLocaleChecked: function(region, pref) {
+            for(regionCheckBox of this.searchByLocale.regionCheckBoxes) {
+                if(regionCheckBox.name == region) {
+                    // 地方名がチェックされていなければ直ぐにreturn
+                    if(!regionCheckBox.checked) {
+                        return false;
+                    }
+
+                    // 地方内の県を検索
+                    for(prefCheckBox of regionCheckBox.prefCheckBoxes) {
+                        if(prefCheckBox.name == pref) {
+                            return prefCheckBox.checked;
+                        }
+                    }
+                }
+            }
+        },
+        beforeEnter: function(el) {
+            el.style.height = '0';
+        },
+        enter: function(el) {
+            el.style.height = el.scrollHeight + 'px';
+        },
+        beforeLeave: function(el) {
+            el.style.height = el.scrollHeight + 'px';
+        },
+        leave: function(el) {
+            el.style.height = '0';
         }
     }
 });
+
+function random(array, num) {
+    var a = array;
+    var t = {};
+    var r = [];
+    var l = a.length;
+    var n = num < l ? num : l;
+    while (n-- > 0) {
+        var i = Math.random() * l | 0;
+        r[n] = t[i] || a[i];
+        --l;
+        t[i] = t[l] || a[l];
+    }
+    return r;
+}
