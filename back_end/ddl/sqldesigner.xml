@@ -37,33 +37,54 @@
 		<type label="SET" length="1" sql="SET" quote=""/>
 		<type label="Bit" length="0" sql="bit" quote=""/>
 	</group>
-</datatypes><table x="53" y="170" name="prefecture">
-<row name="pref_cd" null="0" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>'NULL'</default><comment>県コード</comment>
+</datatypes><table x="52" y="176" name="prefecture">
+<row name="pref_cd" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><comment>県コード</comment>
+</row>
+<row name="region_cd" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="region" row="region_cd" />
+<comment>地方コード</comment>
 </row>
 <row name="pref_name" null="0" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
 <default>'NULL'</default><comment>県名</comment>
 </row>
-<row name="region_cd" null="0" autoincrement="0">
+<row name="pref_name_kana" null="1" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
-<default>'NULL'</default><relation table="region" row="region_cd" />
-<comment>地方コード</comment>
-</row>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>pref_cd</part>
 </key>
 <comment>県</comment>
 </table>
 <table x="253" y="102" name="specialty_food">
-<row name="id" null="1" autoincrement="1">
+<row name="s_food_cd" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<row name="season_cd" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="season" row="season_cd" />
+<comment>季節コード</comment>
+</row>
+<row name="pref_cd" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="prefecture" row="pref_cd" />
+<comment>県コード</comment>
+</row>
+<row name="station_cd" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="station" row="station_cd" />
+<comment>駅コード</comment>
+</row>
 <row name="food_name" null="0" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
 <default>'NULL'</default><comment>料理名</comment>
 </row>
+<row name="food_name_kana" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default></row>
 <row name="food_description" null="1" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
 <default>NULL</default><comment>料理説明</comment>
@@ -72,30 +93,15 @@
 <datatype>MEDIUMTEXT</datatype>
 <default>NULL</default><comment>料理画像URL</comment>
 </row>
-<row name="season_cd" null="1" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>NULL</default><relation table="season" row="season_cd" />
-<comment>季節コード</comment>
-</row>
-<row name="pref_cd" null="1" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>NULL</default><relation table="prefecture" row="pref_cd" />
-<comment>県コード</comment>
-</row>
-<row name="station_cd" null="1" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>NULL</default><relation table="station" row="station_cd" />
-<comment>駅コード</comment>
-</row>
 <key type="PRIMARY" name="">
-<part>id</part>
+<part>s_food_cd</part>
 </key>
 <comment>ご当地名物</comment>
 </table>
 <table x="502" y="101" name="season">
-<row name="season_cd" null="0" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>'NULL'</default><comment>季節コード</comment>
+<row name="season_cd" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><comment>季節コード</comment>
 </row>
 <row name="season_name" null="0" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
@@ -115,51 +121,57 @@
 <comment>旬の時期</comment>
 </table>
 <table x="50" y="52" name="region">
-<row name="region_cd" null="0" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>'NULL'</default><comment>地方コード</comment>
+<row name="region_cd" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><comment>地方コード</comment>
 </row>
 <row name="region_name" null="0" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
 <default>'NULL'</default><comment>地方名</comment>
 </row>
+<row name="region_name_kana" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>region_cd</part>
 </key>
 <comment>地方</comment>
 </table>
-<table x="54" y="301" name="station">
-<row name="station_cd" null="0" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>'NULL'</default><comment>駅コード</comment>
+<table x="53" y="328" name="station">
+<row name="station_cd" null="0" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default><comment>駅コード</comment>
+</row>
+<row name="pref_cd" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="prefecture" row="pref_cd" />
+<comment>県コード</comment>
 </row>
 <row name="station_name" null="0" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
 <default>'NULL'</default><comment>駅名</comment>
 </row>
-<row name="pref_cd" null="0" autoincrement="0">
+<row name="station_name_kana" null="1" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
-<default>'NULL'</default><relation table="prefecture" row="pref_cd" />
-<comment>県コード</comment>
-</row>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>station_cd</part>
 </key>
 <comment>駅</comment>
 </table>
-<table x="55" y="429" name="distance">
-<row name="id" null="1" autoincrement="0">
+<table x="50" y="472" name="distance">
+<row name="distance_cd" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default><comment>id</comment>
 </row>
 <row name="from_station_cd" null="0" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>'NULL'</default><relation table="station" row="station_cd" />
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="station" row="station_cd" />
 <comment>出発駅</comment>
 </row>
 <row name="to_station_cd" null="0" autoincrement="0">
-<datatype>MEDIUMTEXT</datatype>
-<default>'NULL'</default><relation table="station" row="station_cd" />
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="station" row="station_cd" />
 <comment>到着駅</comment>
 </row>
 <row name="distance" null="1" autoincrement="0">
@@ -171,7 +183,7 @@
 <default>NULL</default><comment>所要時間</comment>
 </row>
 <key type="PRIMARY" name="">
-<part>id</part>
+<part>distance_cd</part>
 </key>
 <comment>距離</comment>
 </table>
