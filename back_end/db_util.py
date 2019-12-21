@@ -1,9 +1,9 @@
 # coding=utf-8
 import sys   
 import psycopg2
-from sqlalchemy import Column, Integer, String, DateTime,create_engine  
+from sqlalchemy import Column, Integer, String, DateTime, create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.sql import func
 import datetime
 import time
@@ -55,7 +55,7 @@ def saveEntities(entities):
     session.add_all(entities)
     session.commit()
 
-  
+
 """
     Model
 
@@ -65,7 +65,8 @@ class Region(Base):
     __tablename__ = 'region'
     region_cd = Column('region_cd', Integer, primary_key=True)  
     region_name = Column('region_name', String(10))  
-    region_name_kana = Column('region_name_kana', String(10))  
+    region_name_kana = Column('region_name_kana', String(10))
+    pref = relationship('Prefecture')
 
 
     @classmethod
@@ -83,9 +84,11 @@ class Region(Base):
         recs= []
         for entity in entities:
             rec = {}
-            rec['region_cd'] = entity.region_cd
-            rec['region_name'] = entity.region_name  
-            rec['region_name_kana'] = entity.region_name_kana  
+            rec['regionCd'] = entity.region_cd
+            rec['regionName'] = entity.region_name  
+            rec['regionNameKana'] = entity.region_name_kana
+            rec['checked'] = True
+            rec['prefChecks'] = Prefecture.populate_entities_to_dicts(entity.pref)
             recs.append(rec)
         return recs
 
@@ -93,7 +96,8 @@ class Region(Base):
 class Prefecture(Base):
     __tablename__ = 'prefecture'
     pref_cd = Column('pref_cd', Integer, primary_key=True)
-    region_cd = Column('region_cd', Integer)
+    # region_cd = Column('region_cd', Integer)
+    region_cd = Column(Integer, ForeignKey('region.region_cd'))
     pref_name = Column('pref_name', String(10))  
     pref_name_kana = Column('pref_name_kana', String(10))  
 
@@ -113,10 +117,10 @@ class Prefecture(Base):
         recs= []
         for entity in entities:
             rec = {}
-            rec['pref_cd'] = entity.pref_cd
-            rec['region_cd'] = entity.region_cd
-            rec['pref_name'] = entity.pref_name  
-            rec['pref_name_kana'] = entity.pref_name_kana  
+            rec['prefCd'] = entity.pref_cd
+            rec['regionCd'] = entity.region_cd
+            rec['prefName'] = entity.pref_name  
+            rec['prefNameKana'] = entity.pref_name_kana
+            rec['checked'] = True
             recs.append(rec)
         return recs
-

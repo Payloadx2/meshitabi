@@ -10,7 +10,7 @@ import os
 """
 app = Flask(__name__)
 
-CORS(app, resources=r'*', origins=['http://localhost:5500'])
+CORS(app, resources=r'*', origins=['http://localhost:8080'])
 app.config['JSON_AS_ASCII'] = False
 
 
@@ -29,39 +29,14 @@ def get_locale():
     # max_id = req.args.get('maxid') if (req.args.get('maxid') is not None) and req.args.get('maxid').isdecimal() else '' 
     # fetch_count = req.args.get('count') if (req.args.get('count') is not None) and req.args.get('count').isdecimal() else ''
 
-    # 地方データDB取得
+    # 地方/県データDB取得(県データは地方データ取得時にjoin取得される)
     regions = db_util.Region.get_all()
 
-    # 県データDB取得
-    prefs = db_util.Prefecture.get_all()
-
-    # json整形(階層構造に整形)
-    stratified_locale = stratify_locale(regions,prefs)
-
-    return make_response(jsonify(stratified_locale))
-
-
-def stratify_locale(regions,prefs):
-    """地方データと県データを階層化します。
-    """
-    for region in regions:
-        region['prefs'] = []
-        for pref in prefs:
-            if region['region_cd'] == pref['region_cd']:
-                 region['prefs'].append(pref)
+    return make_response(jsonify(regions))
 
 
 """
     main
 """
 if __name__ == "__main__":
-    # 地方データDB取得
-    regions = db_util.Region.get_all()
-
-    # 県データDB取得
-    prefs = db_util.Prefecture.get_all()
-
-    # json整形(階層構造に整形)
-    stratified_locale = stratify_locale(regions,prefs)
-
     app.run(host="0.0.0.0", port=5001)

@@ -1,14 +1,15 @@
 let vm = new Vue({
     el: '#main-container',
     data: {
-        searchByLocale:{
+        searchByLocale: {
             visible: true,
-            regionCheckBoxes:[
+            regionCheckBoxes: [
                 {
-                    id: 'pc01',
-                    name: '東北',
+                    region_cd: 'pc01',
+                    region_name: '東北',
+                    region_name_kana: 'トウホク',
                     checked: 'checked',
-                    prefCheckBoxes:[
+                    prefCheckBoxes: [
                         {
                             id: 'cc01',
                             name: '青森',
@@ -37,10 +38,11 @@ let vm = new Vue({
                     ]
                 },
                 {
-                    id: 'pc02',
-                    name: '北海道',
+                    region_cd: 'pc02',
+                    region_name: '北海道',
+                    region_name_kana: 'ホッカイドウ',
                     checked: 'checked',
-                    prefCheckBoxes:[
+                    prefCheckBoxes: [
                         {
                             id: 'cc06',
                             name: '北海道',
@@ -49,10 +51,11 @@ let vm = new Vue({
                     ]
                 },
                 {
-                    id: 'pc03',
-                    name: '近畿',
+                    region_cd: 'pc03',
+                    region_name: '近畿',
+                    region_name_kana: 'キンキ',
                     checked: 'checked',
-                    prefCheckBoxes:[
+                    prefCheckBoxes: [
                         {
                             id: 'cc07',
                             name: '三重',
@@ -61,10 +64,11 @@ let vm = new Vue({
                     ]
                 },
                 {
-                    id: 'pc04',
-                    name: '中国',
+                    region_code: 'pc04',
+                    region_name: '中国',
+                    region_name_kana: 'チュウゴク',
                     checked: 'checked',
-                    prefCheckBoxes:[
+                    prefCheckBoxes: [
                         {
                             id: 'cc08',
                             name: '鳥取',
@@ -73,10 +77,11 @@ let vm = new Vue({
                     ]
                 },
                 {
-                    id: 'pc05',
-                    name: '中部',
+                    region_code: 'pc05',
+                    region_name: '中部',
+                    region_name_kana: 'チュウブ',
                     checked: 'checked',
-                    prefCheckBoxes:[
+                    prefCheckBoxes: [
                         {
                             id: 'cc09',
                             name: '石川',
@@ -143,7 +148,7 @@ let vm = new Vue({
                 ]
             }
         ],
-        foodDetail:{
+        foodDetail: {
             visible: false,
             title: '牛タン',
             img: './img/gyutan.JPG',
@@ -156,10 +161,10 @@ let vm = new Vue({
         }
     },
     methods: {
-        hideDetail: function(){
+        hideDetail: function () {
             this.foodDetail.visible = false;
         },
-        showDetail: function(blockIndex, itemIndex){
+        showDetail: function (blockIndex, itemIndex) {
             this.foodDetail.visible = true;
             this.foodDetail.title = this.foodBlocks[blockIndex].foodItems[itemIndex].food;
         },
@@ -167,55 +172,55 @@ let vm = new Vue({
             this.foodBlocks[blockIndex].foodItems[itemIndex].flag = //
                 this.foodBlocks[blockIndex].foodItems[itemIndex].flag ? false : true;
         },
-        refineFoodByFlag: function(){
-            for(block of this.foodBlocks) {
-                for(item of block.foodItems) {
-                    if(!item.flag) {
+        refineFoodByFlag: function () {
+            for (block of this.foodBlocks) {
+                for (item of block.foodItems) {
+                    if (!item.flag) {
                         item.flagVisible = false;
                         item.visible = false;
                     }
                 }
             }
         },
-        clearRefineFoodByFlag: function() {
-            for(block of this.foodBlocks) {
-                for(item of block.foodItems) {
-                    if(!item.flag) {
+        clearRefineFoodByFlag: function () {
+            for (block of this.foodBlocks) {
+                for (item of block.foodItems) {
+                    if (!item.flag) {
                         item.flagVisible = true;
-                        if(item.localeVisible) {
+                        if (item.localeVisible) {
                             item.visible = true;
                         }
                     }
                 }
             }
         },
-        clearAllFlag: function() {
-            for(block of this.foodBlocks) {
-                for(item of block.foodItems) {
+        clearAllFlag: function () {
+            for (block of this.foodBlocks) {
+                for (item of block.foodItems) {
                     item.flag = false;
                     item.flagVisible = true;
-                    if(item.localeVisible) {
+                    if (item.localeVisible) {
                         item.visible = true;
                     }
                 }
             }
         },
-        toggleLocaleSearchBox: function(){
+        toggleLocaleSearchBox: function () {
             this.searchByLocale.visible = !this.searchByLocale.visible;
         },
-        toggleCheckAllPrefInReg: function(regionCheckBoxIndex) {
+        toggleCheckAllPrefInReg: function (regionCheckBoxIndex) {
             parentChecked = this.searchByLocale.regionCheckBoxes[regionCheckBoxIndex].checked;
-            for(prefCheckBox of this.searchByLocale.regionCheckBoxes[regionCheckBoxIndex].prefCheckBoxes) {
+            for (prefCheckBox of this.searchByLocale.regionCheckBoxes[regionCheckBoxIndex].prefCheckBoxes) {
                 prefCheckBox.checked = parentChecked;
-            } 
+            }
         },
-        showRandomChoise: function(count) {
+        showRandomChoise: function (count) {
             let targetFoods = [];
 
             // 表示されている名物にターゲットを絞り込む
-            this.foodBlocks.forEach(function(block, blockIndex) {
-                block.foodItems.forEach(function(item, itemIndex) {
-                    if(item.visible){
+            this.foodBlocks.forEach(function (block, blockIndex) {
+                block.foodItems.forEach(function (item, itemIndex) {
+                    if (item.visible) {
                         targetFoods.push(
                             {
                                 blockIndex: blockIndex,
@@ -233,48 +238,48 @@ let vm = new Vue({
             // 結果表示
             this.randomChoiseResult.visible = true;
         },
-        hideRandomChoise: function() {
+        hideRandomChoise: function () {
             this.randomChoiseResult.visible = false;
             this.randomChoiseResult.foodItems.splice(0);
         },
-        refineFoodByLocale: function() {
-            for(block of this.foodBlocks) {
-                for(item of block.foodItems) {
+        refineFoodByLocale: function () {
+            for (block of this.foodBlocks) {
+                for (item of block.foodItems) {
                     item.localeVisible = this.isLocaleChecked(item.region, item.pref);
-                    if(item.visible != (item.flagVisible && item.localeVisible)) {
+                    if (item.visible != (item.flagVisible && item.localeVisible)) {
                         // 現在の表示状態と、localeVisible更新後の表示状態が異なる場合のみ表示状態更新
                         item.visible = item.flagVisible && item.localeVisible;
                     }
                 }
             }
         },
-        isLocaleChecked: function(region, pref) {
-            for(regionCheckBox of this.searchByLocale.regionCheckBoxes) {
-                if(regionCheckBox.name == region) {
+        isLocaleChecked: function (region, pref) {
+            for (regionCheckBox of this.searchByLocale.regionCheckBoxes) {
+                if (regionCheckBox.region_name == region) {
                     // 地方名がチェックされていなければ直ぐにreturn
-                    if(!regionCheckBox.checked) {
+                    if (!regionCheckBox.checked) {
                         return false;
                     }
 
                     // 地方内の県を検索
-                    for(prefCheckBox of regionCheckBox.prefCheckBoxes) {
-                        if(prefCheckBox.name == pref) {
+                    for (prefCheckBox of regionCheckBox.prefCheckBoxes) {
+                        if (prefCheckBox.name == pref) {
                             return prefCheckBox.checked;
                         }
                     }
                 }
             }
         },
-        beforeEnter: function(el) {
+        beforeEnter: function (el) {
             el.style.height = '0';
         },
-        enter: function(el) {
+        enter: function (el) {
             el.style.height = el.scrollHeight + 'px';
         },
-        beforeLeave: function(el) {
+        beforeLeave: function (el) {
             el.style.height = el.scrollHeight + 'px';
         },
-        leave: function(el) {
+        leave: function (el) {
             el.style.height = '0';
         }
     }

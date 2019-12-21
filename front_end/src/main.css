@@ -1,0 +1,65 @@
+@charset "utf-8";
+:root {
+    --main-bg-color: rgb(78, 18, 24);
+    --main-shadow-color: rgb(24, 4, 20);
+    --sub-bg-color: rgb(121, 26, 51);
+    --sub2-bg-color: #F2E0D7;
+    --accent-bg-color: rgb(240, 132, 179);
+    --main-color: whitesmoke;
+}
+
+/**
+ *  アプリケーション共通部 
+ */
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: white;
+    background-size: cover;
+    font-size: 1.4rem;
+    font-family: 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+    margin: 0;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    list-style:none;
+}
+
+button {
+    border: none;
+}
+
+button:focus {
+    outline: 0;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:active {
+    transform: translate3d(0, 0.15rem, 0);
+}
+
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
