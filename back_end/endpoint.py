@@ -17,26 +17,23 @@ app.config['JSON_AS_ASCII'] = False
 """
     app rooting
 """
-@app.route('/locale', methods=['GET'])
-def get_locale():
-    """地方・県データを返却します。
+@app.route('/appdata', methods=['GET'])
+def get_appdata():
+    """アプリケーション表示用データを返却します。
     """
-    # リクエストパラメタ取得
-    # max_id = req.args.get('maxid')
-    # fetch_count = req.args.get('count')
-    
-    # リクエストパラメタチェック
-    # max_id = req.args.get('maxid') if (req.args.get('maxid') is not None) and req.args.get('maxid').isdecimal() else '' 
-    # fetch_count = req.args.get('count') if (req.args.get('count') is not None) and req.args.get('count').isdecimal() else ''
+    app_data = {}
 
     # 地方/県データDB取得(県データは地方データ取得時にjoin取得される)
-    regions = db_util.Region.get_all()
+    app_data['regions'] = db_util.Region.get_all()
 
-    return make_response(jsonify(regions))
+    # 名産品データDB取得
+    app_data['foodCategories'] = db_util.FoodCategory.get_all()
 
+    return make_response(jsonify(app_data))
 
 """
     main
 """
 if __name__ == "__main__":
+    print(db_util.FoodCategory.get_all())
     app.run(host="0.0.0.0", port=5001)

@@ -1,14 +1,14 @@
 <template>
   <div>
     <li class="food-item clearfix">
-      <button class="flag" @click="changeFlag" :class="{selected:food.flag}">
+      <button class="flag" @click="changeFlag" :class="{selected:specialtyFood.flag}">
         <font-awesome-icon icon="flag" />
       </button>
       <span @click="showDetail">
-        <span class="food">{{food.food}}</span>
+        <span class="food">{{specialtyFood.foodName}}</span>
         <span class="discription">
           <span class="point">・・・</span>
-          <span class="locale">{{food.pref}}</span>
+          <span class="locale">{{specialtyFood.prefName}}</span>
         </span>
       </span>
     </li>
@@ -18,21 +18,21 @@
 <script>
 export default {
   props: {
-    blockIndex: Number,
-    rowIndex: Number,
-    food: Object,
+    categoryIndex: Number,
+    specialtyFoodIndex: Number,
+    specialtyFood: Object,
   },
   methods: {
     changeFlag: function(){
       this.$store.commit('changeFlag',{
-        blockIndex: this.blockIndex,
-        rowIndex: this.rowIndex,
+        categoryIndex: this.categoryIndex,
+        specialtyFoodIndex: this.specialtyFoodIndex,
       })
     },
     showDetail: function(){
       this.$store.commit('showDetail',{
-        blockIndex: this.blockIndex,
-        rowIndex: this.rowIndex,
+        categoryIndex: this.categoryIndex,
+        specialtyFoodIndex: this.specialtyFoodIndex,
       })
     }
   },

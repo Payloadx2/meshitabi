@@ -59,14 +59,13 @@
 </key>
 <comment>県</comment>
 </table>
-<table x="253" y="102" name="specialty_food">
-<row name="s_food_cd" null="0" autoincrement="1">
+<table x="249" y="180" name="specialty_food">
+<row name="food_cd" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="season_cd" null="1" autoincrement="0">
+<row name="food_category_cd" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="season" row="season_cd" />
-<comment>季節コード</comment>
+<default>NULL</default><relation table="food_category" row="food_category_cd" />
 </row>
 <row name="pref_cd" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -77,6 +76,15 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="station" row="station_cd" />
 <comment>駅コード</comment>
+</row>
+<row name="location" null="1" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>NULL</default><comment>場所</comment>
+</row>
+<row name="season_cd" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="season" row="season_cd" />
+<comment>季節コード</comment>
 </row>
 <row name="food_name" null="0" autoincrement="0">
 <datatype>MEDIUMTEXT</datatype>
@@ -94,7 +102,7 @@
 <default>NULL</default><comment>料理画像URL</comment>
 </row>
 <key type="PRIMARY" name="">
-<part>s_food_cd</part>
+<part>food_cd</part>
 </key>
 <comment>ご当地名物</comment>
 </table>
@@ -186,5 +194,18 @@
 <part>distance_cd</part>
 </key>
 <comment>距離</comment>
+</table>
+<table x="245" y="45" name="food_category">
+<row name="food_category_cd" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="food_category_name" null="0" autoincrement="0">
+<datatype>MEDIUMTEXT</datatype>
+<default>'NULL'</default><comment>食べ物カテゴリ</comment>
+</row>
+<key type="PRIMARY" name="">
+<part>food_category_cd</part>
+</key>
+<comment>食べ物カテゴリ</comment>
 </table>
 </sql>

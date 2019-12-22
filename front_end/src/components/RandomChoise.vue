@@ -10,18 +10,18 @@
       </div>
       <ul class="random-choise-result">
         <li
-          v-for="foodRow in randomChoiseResult.foodRows"
-          :key="foodRow.foodItem.foodCd"
+          v-for="specialtyFood in randomChoiseResult.specialtyFoods"
+          :key="specialtyFood.foodItem.foodCd"
           class="food-item clearfix"
         >
-          <button @click="changeFlag(foodRow.blockIndex, foodRow.rowIndex)" :class="{ selected: foodRow.foodItem.flag }" class="flag">
+          <button @click="changeFlag(specialtyFood.categoryIndex, specialtyFood.specialtyFoodIndex)" :class="{ selected: specialtyFood.foodItem.flag }" class="flag">
             <font-awesome-icon icon="flag" />
           </button>
           <span>
-            <span class="food">{{ foodRow.foodItem.food }}</span>
+            <span class="food">{{ specialtyFood.foodItem.foodName }}</span>
             <span class="discription">
               <span class="point">・・・</span>
-              <span class="locale">{{ foodRow.foodItem.pref }}</span>
+              <span class="locale">{{ specialtyFood.foodItem.prefName }}</span>
             </span>
           </span>
         </li>
@@ -41,11 +41,11 @@ export default {
     hideRandomChoise: function() {
       this.$store.commit("hideRandomChoise")
     },
-    changeFlag: function(blockIndex, rowIndex) {
+    changeFlag: function(categoryIndex, specialtyFoodIndex) {
         return this.$store.commit('changeFlag',
             {
-                blockIndex: blockIndex,
-                rowIndex: rowIndex,
+                categoryIndex: categoryIndex,
+                specialtyFoodIndex: specialtyFoodIndex,
             }
         )
     },

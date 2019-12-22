@@ -1,11 +1,4 @@
 -- ---
--- Globals
--- ---
-
--- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
--- SET FOREIGN_KEY_CHECKS=0;
-
--- ---
 -- Table 'region'
 -- 地方
 -- ---
@@ -35,6 +28,19 @@ CREATE TABLE prefecture (
 );
 
 -- ---
+-- Table 'food_category'
+-- 食べ物カテゴリ
+-- ---
+
+DROP TABLE IF EXISTS food_category;
+
+CREATE TABLE food_category (
+  food_category_cd SERIAL NOT NULL,
+  food_category_name TEXT NOT NULL,
+  PRIMARY KEY (food_category_cd)
+);
+
+-- ---
 -- Table 'specialty_food'
 -- ご当地名物
 -- ---
@@ -42,15 +48,17 @@ CREATE TABLE prefecture (
 DROP TABLE IF EXISTS specialty_food;
 		
 CREATE TABLE specialty_food (
-  s_food_cd SERIAL NOT NULL,
-  season_cd INTEGER NULL,
+  food_cd SERIAL NOT NULL,
+  food_category_cd INTEGER NULL,
   pref_cd INTEGER NULL,
   station_cd INTEGER NULL,
+  location TEXT NULL,
+  season_cd INTEGER NULL,
   food_name TEXT NOT NULL,
   food_name_kana TEXT NULL,
   food_description TEXT NULL,
   food_img_url TEXT NULL,
-  PRIMARY KEY (s_food_cd)
+  PRIMARY KEY (food_cd)
 );
 
 -- ---
@@ -104,6 +112,7 @@ CREATE TABLE distance (
 -- ---
 
 ALTER TABLE prefecture ADD FOREIGN KEY (region_cd) REFERENCES region (region_cd);
+ALTER TABLE specialty_food ADD FOREIGN KEY (food_category_cd) REFERENCES food_category (food_category_cd);
 ALTER TABLE specialty_food ADD FOREIGN KEY (season_cd) REFERENCES season (season_cd);
 ALTER TABLE specialty_food ADD FOREIGN KEY (pref_cd) REFERENCES prefecture (pref_cd);
 ALTER TABLE specialty_food ADD FOREIGN KEY (station_cd) REFERENCES station (station_cd);
@@ -112,23 +121,12 @@ ALTER TABLE distance ADD FOREIGN KEY (from_station_cd) REFERENCES station (stati
 ALTER TABLE distance ADD FOREIGN KEY (to_station_cd) REFERENCES station (station_cd);
 
 -- ---
--- Table Properties
--- ---
-
--- ALTER TABLE prefecture ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE specialty_food ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE season ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE region ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE station ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE distance ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ---
 -- Test Data
 -- ---
 
 -- INSERT INTO prefecture (pref_cd,region_cd,pref_name,pref_name_kana) VALUES
 -- ('','','','');
--- INSERT INTO specialty_food (s_food_cd,season_cd,pref_cd,station_cd,food_name,food_name_kana,food_description,food_img_url) VALUES
+-- INSERT INTO specialty_food (food_cd,season_cd,pref_cd,station_cd,food_name,food_name_kana,food_description,food_img_url) VALUES
 -- ('','','','','','','','');
 -- INSERT INTO season (season_cd,season_name,season_start,season_end) VALUES
 -- ('','','','');
@@ -138,3 +136,5 @@ ALTER TABLE distance ADD FOREIGN KEY (to_station_cd) REFERENCES station (station
 -- ('','','','');
 -- INSERT INTO distance (distance_cd,from_station_cd,to_station_cd,distance,time_required) VALUES
 -- ('','','','','');
+-- INSERT INTO food_category (food_category_cd,food_category_name) VALUES
+-- ('','');

@@ -1,0 +1,26 @@
+=IF(
+    isblank(B$5),
+    "null",
+    SUBSTITUTE(
+        SUBSTITUTE(
+            VLOOKUP(
+                B$4,
+                pattern!$A$2:$B$4,
+                2,
+                false
+            ),
+            "@@@",
+            B5
+        ),
+        B5,
+        INDEX(
+            food_category!$A$5:$B$7, 
+            match(
+                B5, 
+                food_category!$B$5:$B$7, 
+                0
+            ), 
+            1
+        )
+    )
+)
