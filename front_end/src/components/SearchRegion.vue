@@ -1,10 +1,10 @@
 <template>
   <ul class="region">
     <li>
-      <input type="checkbox" v-model="regionCheck.checked" @change="toggleCheckAllPrefInReg" />
+      <input type="checkbox" v-model="regionCheck.checked" @change="toggleRegionCheck" />
       <label>{{ regionCheck.regionName }}</label>
       <ul>
-        <li class="pref" v-for="prefCheck in regionCheck.prefChecks" v-bind:key="prefCheck.prefCd">
+        <li class="pref" v-for="prefCheck in regionCheck.prefChecks" v-bind:key="prefCheck.prefCd" @change="togglePrefCheck">
           <input type="checkbox" v-model="prefCheck.checked" />
           <label>{{ prefCheck.prefName }}</label>
         </li>
@@ -20,8 +20,12 @@ export default {
     regionCheck: Object
   },
   methods: {
-    toggleCheckAllPrefInReg: function() {
+    toggleRegionCheck: function() {
       this.$store.commit('toggleCheckAllPrefInReg', {regionCheckIndex : this.regionCheckIndex})
+      this.$store.commit('refineFoodByLocale')
+    },
+    togglePrefCheck: function() {
+      this.$store.commit('refineFoodByLocale')
     }
   },
 };
@@ -37,7 +41,7 @@ export default {
 }
 
 ul {
-  padding-left: 2rem;
+  padding-left: 2.4rem;
 }
 
 </style>

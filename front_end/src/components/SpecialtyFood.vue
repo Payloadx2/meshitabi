@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div v-show="visible">
     <li class="food-item clearfix">
       <button class="flag" @click="changeFlag" :class="{selected:specialtyFood.flag}">
         <font-awesome-icon icon="flag" />
       </button>
-      <span @click="showDetail">
+      <span>
         <span class="food">{{specialtyFood.foodName}}</span>
         <span class="discription">
           <span class="point">・・・</span>
@@ -21,6 +21,11 @@ export default {
     categoryIndex: Number,
     specialtyFoodIndex: Number,
     specialtyFood: Object,
+  },
+  computed: {
+    visible: function() {
+      return this.specialtyFood.flagVisible && this.specialtyFood.localeVisible
+    }
   },
   methods: {
     changeFlag: function(){

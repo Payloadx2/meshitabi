@@ -10,14 +10,20 @@ import os
 """
 app = Flask(__name__)
 
-CORS(app, resources=r'*', origins=['http://localhost:8080'])
+# CORS(app, resources=r'*', origins=['http://localhost:8080'])
+CORS(app, resources=r'*', origins=['https://www.meshitabi.net/meshitabi','http://localhost:8080'])
 app.config['JSON_AS_ASCII'] = False
 
+
+# nginxのlocation設定と揃えること。
+# Flaskのルーティング設定は @app.route(WEBAPP_CONTEXT_ROOT + '/test) のように
+# 必ず当定数を付加すること。
+WEBAPP_CONTEXT_ROOT = '/backend/meshitabi'
 
 """
     app rooting
 """
-@app.route('/appdata', methods=['GET'])
+@app.route(WEBAPP_CONTEXT_ROOT + '/appdata', methods=['GET'])
 def get_appdata():
     """アプリケーション表示用データを返却します。
     """

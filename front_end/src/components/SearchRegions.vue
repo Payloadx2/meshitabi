@@ -18,7 +18,7 @@
         :region-check-index="regionCheckIndex"
         :region-check="regionCheck"
       ></search-region>
-      <button @click="refineFoodByLocale" class="search-regions-button">絞り込む</button>
+      <!-- <button @click="refineFoodByLocale" class="search-regions-button">絞り込む</button> -->
     </div>
     </transition>
   </div>
@@ -85,8 +85,8 @@ export default {
 }
 
 .search-title.opened::after{
-      transform:rotateX(180deg);
-      margin-top: -6px;
+  transform:rotateX(180deg);
+  margin-top: -6px;
 }
 
 .search-region {
@@ -97,6 +97,7 @@ export default {
 
 .search-regions {
     overflow: hidden;
+    padding-left: 1rem;
     transition: all 0.4s ease-in;
 }
 
@@ -121,7 +122,7 @@ export default {
 }
 @keyframes search-accordion-close {
     0% {
-        height: 400px;
+        height: 30rem;
     }
 
     100% {

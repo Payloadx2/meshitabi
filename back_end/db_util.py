@@ -8,6 +8,7 @@ from sqlalchemy.sql import func
 import datetime
 import time
 import os
+import json
 
 """
     connection to DB
@@ -19,10 +20,12 @@ import os
 """
 
 # Database定義
-SERVER_NAME = 'localhost'
-DB_NAME   = 'meshitabi'
-DB_USER = 'meshitabi'
-DB_PASSWORD = 'meshitabi'
+with open(os.path.dirname(os.path.abspath(__file__))+'/settings/key.json') as f:
+    df = json.load(f)
+    SERVER_NAME = df['SERVER_NAME']
+    DB_NAME = df['DB_NAME']
+    DB_USER = df['DB_USER']
+    DB_PASSWORD = df['DB_PASSWORD']
 
 DATABASE = 'postgresql+psycopg2://%s:%s@%s/%s' % (
     DB_USER,
@@ -178,6 +181,7 @@ class FoodCategory(Base):
         recs= []
         for entity in entities:
             rec = {}
+            rec['opened'] = True
             rec['foodCategoryCd'] = entity.food_category_cd
             rec['foodCategoryName'] = entity.food_category_name
             rec['specialtyFoods'] = []
@@ -256,6 +260,6 @@ class SpecialtyFood(Base):
             rec['flag'] = False
             rec['flagVisible'] = True
             rec['localeVisible'] = True
-            rec['visible'] = True
+            # rec['visible'] = True
             recs.append(rec)
         return recs
